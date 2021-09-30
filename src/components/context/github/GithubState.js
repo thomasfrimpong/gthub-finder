@@ -31,11 +31,27 @@ const GithubState = (props) => {
     });
   };
 
+  //get user
+  const getUser = async (username) => {
+    const res =
+      await axios.get(`https://api.github.com/search/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+     &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+
+    dispatch({
+      type: GET_USER,
+      payload: res.data,
+    });
+  };
+
+  //clear user
+
   return (
     <GithubContext.Provider
       value={{
         users: state.users,
+        user: state.user,
         searchUsers,
+        getUser,
       }}
     >
       {props.children}
